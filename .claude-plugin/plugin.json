@@ -2,6 +2,19 @@
   "name": "goat-grid-explainer",
   "version": "1.0.0",
   "description": "Grid Explainer · Торон дэвтэр: turns one talking-head clip into a light step-by-step app demo on grid paper. The face sits in a white-framed card, a blue rail tags each chapter, a headline marks one keyword in a dashed selection box, and small app cards act out each point. Renders a 1080x1920 MP4 for Reels/TikTok.",
-  "author": { "name": "GOAT Academy" },
-  "keywords": ["video", "editing", "reels", "tiktok", "explainer", "talking-head", "mongolian", "ffmpeg"]
+  "author": {
+    "name": "GOAT Academy"
+  },
+  "keywords": [
+    "video",
+    "editing",
+    "reels",
+    "tiktok",
+    "explainer",
+    "talking-head",
+    "mongolian",
+    "ffmpeg"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/SaagiiSG/goat-grid-explainer"
 }

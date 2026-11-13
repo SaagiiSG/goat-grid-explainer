@@ -1,6 +1,9 @@
 {
   "name": "goat-grid-explainer",
-  "owner": { "name": "GOAT Academy" },
+  "owner": {
+    "name": "GOAT Academy"
+  },
+  "description": "Grid Explainer · Торон дэвтэр: grid-paper app-demo look for talking-head Reels/TikTok. Mongolian-first.",
   "plugins": [
     {
       "name": "goat-grid-explainer",
