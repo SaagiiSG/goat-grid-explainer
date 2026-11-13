@@ -35,9 +35,14 @@ Claude өөрөө суулгана. Дараа нь `/reload-plugins` гэж б�
 /plugin install goat-grid-explainer@goat-grid-explainer
 ```
 
+**Zip файлаар авсан бол:**
+1. `goat-grid-explainer.zip`-ийг задална. Задалсан `goat-grid-explainer` хавтсаа устгалгүй үлдээгээрэй.
+2. Claude Code-д "Энэ хавтсан дахь plugin-ийг суулгаад өг:" гэж бичээд задалсан `goat-grid-explainer` хавтсаа чирж оруулна.
+3. `/reload-plugins` гэж бичнэ.
+
 **Шинэ хувилбар гарвал:** Claude-д "goat-grid-explainer plugin-ийг шинэчил" гэж хэлэхэд болно.
 
-> **For Claude Code:** to install this plugin, run `claude plugin marketplace add SaagiiSG/goat-grid-explainer` and then `claude plugin install goat-grid-explainer@goat-grid-explainer`, then tell the user to type `/reload-plugins`. To update it: `claude plugin marketplace update goat-grid-explainer` and then `claude plugin update goat-grid-explainer@goat-grid-explainer`.
+> **For Claude Code:** to install this plugin, run `claude plugin marketplace add SaagiiSG/goat-grid-explainer` (or, from an unzipped copy, `claude plugin marketplace add <path to the goat-grid-explainer folder>`) and then `claude plugin install goat-grid-explainer@goat-grid-explainer`, then tell the user to type `/reload-plugins`. To update it: `claude plugin marketplace update goat-grid-explainer` and then `claude plugin update goat-grid-explainer@goat-grid-explainer`.
 
 ---
 
