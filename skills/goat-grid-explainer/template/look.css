@@ -1,0 +1,83 @@
+@font-face { font-family: "Inter"; src: url("fonts/Inter%5Bopsz,wght%5D.ttf"); font-weight: 100 900; }
+@font-face { font-family: "PT Serif"; src: url("fonts/PT_Serif-Web-Italic.ttf"); font-style: italic; font-weight: 400; }
+
+/* the preview's colours; look.js mixes new ones from a member's accent */
+:root { --accent: #3B5BDB; --deep: #3446C9; --light: #6E82E6; --tint: #E6EAFB; }
+
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F3F2EE; }
+/* preview .gx .screen: off-white paper, a 54 px grid of 1 px lines */
+#root {
+  position: relative; width: 1080px; height: 1920px; overflow: hidden; background-color: #F3F2EE;
+  background-image: linear-gradient(#E3E1DA 1px, transparent 1px), linear-gradient(90deg, #E3E1DA 1px, transparent 1px);
+  background-size: 54px 54px; font-family: "Inter", sans-serif; color: #111;
+}
+* { box-sizing: border-box; }
+
+/* .rail / .node: the blue line from the top into a ring at the chapter tag (centre 71.5, 512) */
+#rail { position: absolute; left: 69px; top: 0; width: 5px; height: 512px; background: var(--accent); }
+#node { position: absolute; left: 56.5px; top: 497px; width: 30px; height: 30px; border-radius: 50%; border: 6px solid var(--accent); background: #fff; }
+
+#sections > div > * { position: absolute; opacity: 0; }
+/* .pill: Inter 600 28 px, white on the accent, 52 px tall, centred on the node (preview left 118.8, here 120 = the safe box) */
+.pill { left: 120px; top: 486px; height: 52px; padding: 0 22px; border-radius: 999px; background: var(--accent); color: #fff;
+  font: 600 28px/52px "Inter", sans-serif; white-space: nowrap; }
+/* .h: Inter 700 58 px / 1.3, -0.01em; at y 290 (the preview's 215 is above the safe box), x 162 to 960 at most */
+.head { left: 162px; top: 290px; font: 700 58px/1.3 "Inter", sans-serif; letter-spacing: -0.01em; white-space: nowrap; }
+/* .sel: the keyword in PT Serif italic (62/58 of the headline), a dashed box with four corner handles */
+.sel {
+  display: inline-block; font: italic 400 1.069em/1 "PT Serif", Georgia, serif; letter-spacing: 0; color: var(--deep);
+  padding: 0 10px; border: 2.5px dashed var(--light); opacity: 0;
+  background-image: linear-gradient(var(--light), var(--light)), linear-gradient(var(--light), var(--light)),
+    linear-gradient(var(--light), var(--light)), linear-gradient(var(--light), var(--light));
+  background-size: 10px 10px; background-position: 0 0, 100% 0, 0 100%, 100% 100%; background-repeat: no-repeat;
+}
+
+/* .card: the white app card, 97,586 to 983,903 */
+.card { left: 97px; top: 586px; width: 886px; height: 317px; padding: 30px 34px; background: #fff; border-radius: 26px;
+  box-shadow: 0 10px 30px rgba(20, 20, 40, 0.10), 0 0 0 1px rgba(0, 0, 0, 0.04); white-space: nowrap; }
+.row { display: flex; gap: 18px; align-items: center; }
+.av { width: 56px; height: 56px; border-radius: 50%; background: var(--tint); flex: none; }
+.cal { width: 56px; height: 56px; border-radius: 12px; border: 3px solid #E3E3E8; border-top: 14px solid #E5484D; flex: none; }
+.t1 { display: block; font-weight: 700; font-size: 32px; line-height: 1.2; }
+/* .t2: grey sub line, 26 px here (the preview's 23 px reads small on a phone) */
+.t2 { display: block; font-size: 26px; line-height: 1.3; color: #8A8A90; }
+.bubble { display: inline-block; margin-top: 24px; background: #F1F1F4; border-radius: 20px; padding: 18px 26px;
+  font-weight: 600; font-size: 32px; }
+.bubble span { opacity: 0; }
+/* .big: the value (its own class: the card itself is "card big") */
+.value { font: 800 128px/1 "Inter", sans-serif; color: var(--accent); letter-spacing: -0.03em; margin-top: 16px; transform-origin: 0 50%; opacity: 0; }
+.value.alone { margin-top: 64px; }
+
+/* toggles: a settings list, each switch turns on in the accent */
+.dot { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); flex: none; display: grid; place-items: center; }
+.dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+.toggles .row { height: 50px; gap: 14px; }
+.item { display: flex; align-items: center; justify-content: space-between; height: 69px; border-top: 1px solid #EFEFF2;
+  font-weight: 500; font-size: 28px; color: #2A2A2E; }
+.sw { position: relative; width: 72px; height: 40px; border-radius: 20px; background: #E3E3E8; flex: none; overflow: hidden; }
+.sw .on { position: absolute; inset: 0; background: var(--accent); opacity: 0; }
+.sw .knob { position: absolute; left: 4px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
+
+/* chart: bars rise from a line, the last one in the accent */
+.col { position: absolute; overflow: hidden; }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 12px 12px 0 0; background: #E9E9EE; }
+.axis { position: absolute; left: 34px; top: 252px; width: 818px; height: 2px; background: #E3E3E8; }
+.bar.last { background: var(--accent); }
+/* 28 px in a darker grey (6.3:1 on white): 24 px #8A8A90 read too faint on a phone */
+.lbl { position: absolute; font-weight: 500; font-size: 28px; line-height: 1; color: #5F5F66; text-align: center; }
+.lbl.last { font-weight: 700; color: var(--accent); }
+
+/* .face: the speaker. The whole frame plays full screen; clip-paths cut the card (97,970 to 983,1814, an 8 px white
+   border, radius 34) out of it, and #zoom scales the footage into the card. Shadow as the preview's. */
+#shadow { position: absolute; left: 97px; top: 970px; width: 886px; height: 844px; border-radius: 34px;
+  box-shadow: 0 14px 40px rgba(20, 20, 40, 0.18); }
+#frame { position: absolute; inset: 0; background: #fff; }
+#face { position: absolute; inset: 0; overflow: hidden; }
+#zoom { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
+#clip { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* captions (off unless "captions": true): plain white, low on the face, no highlight or pop */
+.cap { position: absolute; left: 0; right: 0; top: 0; text-align: center; white-space: nowrap; opacity: 0;
+  font: 700 48px/1.2 "Inter", sans-serif; color: #fff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 18px rgba(0, 0, 0, 0.55); }
+.cap span { display: inline-block; }
