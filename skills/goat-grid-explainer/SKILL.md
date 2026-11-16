@@ -1,6 +1,6 @@
 ---
 name: goat-grid-explainer
-description: Grid Explainer · Торон дэвтэр. Turns a talking-head clip into a light, step-by-step app demo on off-white grid paper. The speaker opens full screen, then shrinks into a white-framed card in the lower half; a blue rail tags each chapter, a bold headline marks one keyword in blue serif italic inside a dashed selection box, and a small white app card acts out each point (a message that types itself, switches turning on, a big blue number or time, a bar chart). The face grows back to full screen between points and for emphasis. Cuts the pauses out; plain white captions if wanted. Built on HyperFrames. Renders a 1080x1920 MP4 for Reels/TikTok. Best for coaches, health, real estate and ecommerce owners explaining steps, a booking flow or "how it works". Use whenever the user wants an explainer, a tutorial reel, a "how to book" video, or Odko's grid-paper app style, or types /goat-grid-explainer, /торон-дэвтэр, or says "алхам алхмаар тайлбарласан видео хий", "Одког шиг тайлбар видео", "make an explainer reel", even if they don't name the skill.
+description: Grid Explainer · Торон дэвтэр. Turns a talking-head clip into a light, step-by-step app demo on off-white grid paper. The speaker opens full screen, then shrinks into a white-framed card in the lower half; a blue rail tags each chapter, a bold headline marks one keyword in blue serif italic in a dashed selection box, and a small white app card acts out each point (a message that types itself, switches turning on, a big blue number or time, a bar chart). The face returns full screen between points and for emphasis. Cuts the pauses; plain white captions if wanted. Built on HyperFrames; renders a 1080x1920 MP4 for Reels/TikTok. Best for coaches, health, real estate and ecommerce owners explaining steps or a booking flow. Use whenever the user wants an explainer, a tutorial reel, a "how to book" video, or Odko's grid-paper app style, or types /goat-grid-explainer, /торон-дэвтэр, or says "алхам алхмаар тайлбарласан видео хий", "Одког шиг тайлбар видео", "make an explainer reel", even if they don't name the skill.
 ---
 
 # Grid Explainer · Торон дэвтэр
@@ -31,6 +31,8 @@ The first video downloads, once: the speech model (Whisper large-v3-turbo, about
 Make `raw/` and `output/` in the current folder. Ask for:
 1. **The talking-head clip.** One selfie video of them talking to camera, phone upright, filmed from the chest up with the face in the middle of the frame. Drag it into the chat or copy it into `raw/`. 20–60 s works best. Several clips also work; they play one after another.
 2. **The points.** What they say, in 2–6 short steps. For each step you need a chapter tag (one or two words), a headline (3–6 words with one keyword) and what the app card should show. Never invent prices, times, phone numbers, customer messages or results. Ask.
+
+If they speak English, add `"language": "en"` to plan.json, so the transcript comes out in English (Whisper hears Mongolian otherwise).
 
 Then run `goat probe raw/*`. It prints each file's size, length, whether it has sound, whether it is HDR, and `speech` spans (when someone is talking).
 
@@ -113,7 +115,7 @@ Before rendering, tell the user the plan in plain words (each section: tag, head
 
 `goat render plan.json`
 
-It draws the paper, the face card, the words and the cards, mixes the sound and writes the MP4 plus a contact sheet (one frame per second) at `.work-grid-explainer/sheet.jpg`. On our test Mac a 6 s video took 11–14 s to render (transcribe about 7 s, prep and cut a few seconds each), a 15 s one 22 s. Longer videos take longer, and more if the computer is busy. Run the next render only after the last one ends.
+It draws the paper, the face card, the words and the cards, mixes the sound and writes the MP4 plus a contact sheet (one frame per second) at `.work-grid-explainer/sheet.jpg`. On our test Mac a 6 s video took 11–14 s to render (transcribe 7–8 s, prep and cut a few seconds each), a 15 s one 22 s. Longer videos take longer, and more if the computer is busy. Run the next render only after the last one ends.
 
 Read the contact sheet, the first frame and two full-size frames per section of 2 s or more: 1 s after it starts (everything in) and 0.3 s before it ends (the card done acting). Never pull a frame within 0.4 s of a full-screen span's start or end (the face is moving). For the example plan:
 `ffmpeg -y -loglevel error -i output/grid-explainer.mp4 -frames:v 1 output/check-0.jpg`
