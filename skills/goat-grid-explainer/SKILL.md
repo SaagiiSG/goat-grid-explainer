@@ -14,6 +14,8 @@ Talk to the user in the language they write in (usually Mongolian). Keep message
 
 ## 1. Setup check (first time on a machine)
 
+**Every new video, first:** run `claude plugin marketplace update goat-grid-explainer`, then `claude plugin update goat-grid-explainer@goat-grid-explainer`. If it installs a new version, tell the user a new version was installed and ask them to type `/reload-plugins` before you go on. If either command fails (offline, or installed from a zip), carry on and don't mention it.
+
 Run `node --version` (needs 22 or newer) and `ffmpeg -version`. If either is missing, show the install command and ask before installing (it is their computer):
 - Mac: `brew install node ffmpeg whisper-cpp` (whisper-cpp finds where each point starts in the speech and cuts the pauses; Homebrew's build uses the Mac's graphics chip, so it is fast).
 - Windows: `winget install OpenJS.NodeJS.LTS` and `winget install Gyan.FFmpeg`, then close and reopen the terminal. For the speech step, download `whisper-bin-x64.zip` from https://github.com/ggml-org/whisper.cpp/releases, unzip it, and set `HYPERFRAMES_WHISPER_PATH` to the `whisper-cli.exe` inside (`setx HYPERFRAMES_WHISPER_PATH "C:\path\to\whisper-cli.exe"`, then reopen the terminal). Without it the speech step tries to build Whisper and needs developer tools.
@@ -46,7 +48,7 @@ Then read `.work-grid-explainer/words.json` (the words with their times after th
 
 ## 4. Write the sections
 
-Add `sections` (and, if wanted, `full`, `look`, `captions`) to plan.json. Times are in the cut video (from `words.json`):
+Add `sections` (and, if wanted, `full`, `look`, `captions`) to plan.json. Take every tag, headline and card from what the speaker says (the words you fixed in step 3) or from what the user gave you, never from the example below. Times are in the cut video (from `words.json`):
 
 ```json
 {
@@ -57,10 +59,8 @@ Add `sections` (and, if wanted, `full`, `look`, `captions`) to plan.json. Times 
      "card": {"type": "message", "name": "Шинэ үйлчлүүлэгч", "sub": "Мессеж", "text": "Маргааш цаг байна уу?"}},
     {"start": 7.0, "end": 13.0, "tag": "Тохиргоо", "headline": "Онлайн *захиалга* нээх",
      "card": {"type": "toggles", "title": "Instagram тохиргоо", "items": ["Цаг захиалга", "Сануулга", "Урьдчилгаа"]}},
-    {"start": 13.0, "end": 20.0, "tag": "Хариу", "headline": "Цаг *14:00*",
-     "card": {"type": "big", "title": "Маргааш", "sub": "Захиалга баталгаажлаа", "value": "14:00"}},
-    {"start": 20.0, "end": 27.0, "tag": "Үр дүн", "headline": "Захиалга\n*гурав дахин* өслөө",
-     "card": {"type": "chart", "title": "Сарын захиалга", "bars": [["9 сар", 30], ["10 сар", 52], ["11 сар", 95]]}}
+    {"start": 13.0, "end": 20.0, "tag": "Хариу", "headline": "Маргааш *өглөө*",
+     "card": {"type": "big", "title": "Маргааш", "sub": "Захиалга баталгаажлаа", "value": "Өглөө"}}
   ],
   "full": [[16.0, 17.5]],
   "look": {"accent": "#3B5BDB", "face_y": 0.4}
@@ -69,12 +69,12 @@ Add `sections` (and, if wanted, `full`, `look`, `captions`) to plan.json. Times 
 
 **sections** are the points, in time order, never overlapping. Each has `start` and `end` (seconds in the cut video) and any of:
 - `tag`: the blue chapter pill beside the rail. One or two words, one row of **27 characters at most** (spaces count).
-- `headline`: bold black words (Inter, up to 58 px). Put **exactly one** keyword between two stars: `"Цаг *14:00*"`. It shows in blue serif italic inside the dashed selection box, which lands 0.6 s after the rest. **At most 22 characters a row** (spaces count, the stars don't); split a longer headline into 2 rows yourself with `\n` (2 rows at most, the keyword's two stars in one row). A longer row is refused with a message. A 22-character row of ordinary words stays at the full 58 px; a row of the widest capitals (Ж Ю Щ Ш) shrinks to 34 px. The keyword's font has no ₮ sign (or emoji): put prices in a `big` card.
+- `headline`: bold black words (Inter, up to 58 px). Put **exactly one** keyword between two stars: `"Маргааш *өглөө*"`. It shows in blue serif italic inside the dashed selection box, which lands 0.6 s after the rest. **At most 22 characters a row** (spaces count, the stars don't); split a longer headline into 2 rows yourself with `\n` (2 rows at most, the keyword's two stars in one row). A longer row is refused with a message. A 22-character row of ordinary words stays at the full 58 px; a row of the widest capitals (Ж Ю Щ Ш) shrinks to 34 px. The keyword's font has no ₮ sign (or emoji): put prices in a `big` card.
 - `card`: the white app card. Four types, each word a single row:
   - `message`: a chat. `name` (sender, required, **22 characters** at most), `sub` (small grey line, optional, **28**), `text` (required, **30**): the bubble types itself at 16 letters a second. It is 32 px, shrinking to 25 px for a row of the widest capitals.
   - `toggles`: a settings list. `title` (required, **22**) and `items` (1–3 labels, **25** each). The switches turn blue one by one, 0.5 s apart.
-  - `big`: one huge blue value. `value` (required, **12 characters**: a time, price or number like "14:00", "45 000₮", "+120"; 128 px, shrinking to fit), `title` (**22**) and `sub` (**28**) are an optional header with a calendar icon.
-  - `chart`: a bar chart. `bars` (2–4 pairs of a label and a number 0 or more, at least one above 0), `title` (optional, **22**). Labels (28 px): **13** characters for 2 bars, **9** for 3, **6** for 4. The **last** bar is the blue one and rises last, so put the result last.
+  - `big`: one huge blue value. `value` (required, **12 characters**: a time, number, price or short word, exactly as the speaker or user gave it; 128 px, shrinking to fit), `title` (**22**) and `sub` (**28**) are an optional header with a calendar icon.
+  - `chart`: a bar chart. `bars` (2–4 `[label, number]` pairs, the labels and numbers the speaker or user gave; each number 0 or more, at least one above 0), `title` (optional, **22**). Labels (28 px): **13** characters for 2 bars, **9** for 3, **6** for 4. The **last** bar is the blue one and rises last, so put the result last.
 
 A longer word row is refused with a message saying which one: shorten it. Emoji can't be drawn.
 
@@ -132,6 +132,7 @@ Tell the user where the file is (`output/grid-explainer.mp4`) and that it is rea
 
 ## Rules
 
+- Every word and graphic on screen comes from what this video says or shows, or from what the user gave you. The examples in this file are only examples: never put them in a video. If the user hasn't given the words, ask.
 - Headlines, tags and cards sit inside the area no app buttons cover (x 120–960, y 270–1248). The face card's bottom goes under the app's caption area on purpose; keep anything the viewer must read in a headline or card, never as speech or captions only.
 - Use only the fonts bundled in `SKILL_DIR/fonts` (Inter and PT Serif Italic; they have Ө ө Ү ү, and Inter has ₮). Don't swap in other fonts.
 - One keyword per headline. The selection box only works when it marks the one word that matters.
